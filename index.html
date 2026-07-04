@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Abhay Kumar — ML Engineer</title>
+  <meta name="description" content="Abhay Kumar — Machine Learning & Deep Learning engineer. Interactive hacker-OS portfolio." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="css/theme.css?v=6" />
+  <link rel="stylesheet" href="css/boot.css?v=6" />
+  <link rel="stylesheet" href="css/desktop.css?v=6" />
+  <link rel="stylesheet" href="css/windows.css?v=6" />
+</head>
+<body>
+  <!-- ══════════ BOOT / CURTAIN SCREEN ══════════ -->
+  <div id="boot-screen" aria-label="Boot animation. Press any key to skip.">
+    <div class="curtain curtain-left"></div>
+    <div class="curtain curtain-right"></div>
+    <div id="boot-core">
+      <div id="boot-logo"><!-- dragon emblem injected by boot.js --></div>
+      <pre id="boot-terminal" aria-live="polite"></pre>
+      <div id="boot-skip">press any key / tap to skip</div>
+    </div>
+  </div>
+
+  <!-- ══════════ DESKTOP ══════════ -->
+  <main id="desktop" hidden>
+    <!-- wallpaper layers -->
+    <div id="wallpaper">
+      <div id="grid-layer"></div>
+      <div id="dragon-layer"><!-- flying dragon injected by dragon.js --></div>
+      <div id="wp-identity"><!-- name / tagline injected by desktop.js --></div>
+    </div>
+
+    <!-- top bar (Kali-style panel) -->
+    <header id="topbar">
+      <div class="tb-left">
+        <span class="tb-emblem" id="tb-emblem"></span>
+        <span id="tb-title">abhay@portfolio: ~</span>
+      </div>
+      <div class="tb-right">
+        <span id="tb-build">BUILD v6</span>
+        <span id="tb-clock"></span>
+      </div>
+    </header>
+
+    <!-- desktop icons injected by desktop.js -->
+    <!-- floating project preview "windows on the wallpaper" -->
+    <section id="project-previews" aria-label="Projects"></section>
+
+    <!-- social icons on the desktop -->
+    <section id="desktop-icons" aria-label="Social links"></section>
+
+    <!-- open windows are appended here by windows.js -->
+    <div id="window-layer"></div>
+
+    <!-- bottom dock / taskbar -->
+    <footer id="dock"><div id="dock-items"></div></footer>
+  </main>
+
+  <script type="module" src="js/main.js?v=6"></script>
+</body>
+</html>

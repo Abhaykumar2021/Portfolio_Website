@@ -1,0 +1,415 @@
+/* ============================================================
+   DESKTOP.CSS — wallpaper, flying dragon, icons, panel, dock
+   ============================================================ */
+#desktop { position: fixed; inset: 0; }
+
+/* ── wallpaper layers ─────────────────────────────────────── */
+#wallpaper {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(90% 70% at 70% 20%, #0a1526 0%, transparent 60%),
+    radial-gradient(80% 80% at 15% 85%, #071120 0%, transparent 55%),
+    var(--bg-0);
+  overflow: hidden;
+}
+
+#grid-layer {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(46, 168, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(46, 168, 255, 0.05) 1px, transparent 1px);
+  background-size: 46px 46px;
+  mask-image: radial-gradient(75% 75% at 50% 45%, #000 30%, transparent 100%);
+}
+
+/* flying dragon */
+#dragon-layer {
+  position: absolute; inset: 0;
+  pointer-events: none;
+}
+#dragon {
+  position: absolute;
+  width: min(420px, 55vw);
+  opacity: 0.9;
+  filter: drop-shadow(0 0 22px rgba(46, 168, 255, 0.35));
+  animation: fly 46s ease-in-out infinite;
+  will-change: transform;
+}
+#dragon .wing { transform-origin: 50% 45%; animation: flap 3.4s ease-in-out infinite; }
+#dragon .wing.back { animation-delay: -1.7s; }
+
+@keyframes flap {
+  0%, 100% { transform: rotate(0deg) scaleY(1); }
+  50%      { transform: rotate(-7deg) scaleY(0.92); }
+}
+
+/* long slow patrol across the sky */
+@keyframes fly {
+  0%   { transform: translate(-30vw, 12vh) scale(0.85) rotate(4deg); }
+  22%  { transform: translate(28vw, 4vh)  scale(1)    rotate(-3deg); }
+  45%  { transform: translate(70vw, 18vh) scale(0.9)  rotate(5deg); }
+  60%  { transform: translate(48vw, 40vh) scale(1.05) rotate(-4deg) scaleX(-1); }
+  80%  { transform: translate(5vw, 30vh)  scale(0.9)  rotate(3deg)  scaleX(-1); }
+  100% { transform: translate(-30vw, 12vh) scale(0.85) rotate(4deg); }
+}
+
+
+/* name block on the wallpaper */
+#wp-identity {
+  position: absolute;
+  right: clamp(20px, 5vw, 80px);
+  bottom: clamp(80px, 14vh, 140px);
+  text-align: right;
+  pointer-events: none;
+}
+#wp-identity h1 {
+  font-size: clamp(34px, 6vw, 76px);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: linear-gradient(100deg, var(--text) 30%, var(--accent) 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  line-height: 0.95;
+}
+#wp-identity p {
+  margin-top: 10px;
+  font-family: var(--font-mono);
+  font-size: clamp(10px, 1.4vw, 14px);
+  color: var(--muted);
+  letter-spacing: 0.1em;
+}
+#wp-identity p::before { content: "▸ "; color: var(--term); }
+
+/* ── top panel ────────────────────────────────────────────── */
+#topbar {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: var(--topbar-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  background: rgba(8, 14, 25, 0.85);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  z-index: 500;
+}
+.tb-left { display: flex; align-items: center; gap: 10px; color: var(--muted); }
+.tb-emblem svg, .tb-emblem .dragon-img { width: 22px; height: auto; display: block; }
+#tb-clock { color: var(--accent); }
+.tb-right { display: flex; align-items: center; gap: 12px; }
+#tb-build {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--term);
+  border: 1px solid var(--accent-dim);
+  border-radius: 4px;
+  padding: 1px 6px;
+  opacity: 0.8;
+}
+
+/* ── desktop icons ────────────────────────────────────────── */
+
+/* ── project preview "windows on the wallpaper" ──────────── */
+#project-previews {
+  position: absolute;
+  top: calc(var(--topbar-h) + 24px);
+  right: clamp(16px, 4vw, 70px);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  z-index: 10;
+  max-width: min(420px, 60vw);
+}
+.proj-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(10, 18, 32, 0.82);
+  backdrop-filter: blur(6px);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  text-align: left;
+  color: var(--text);
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  animation: card-in 0.7s ease backwards;
+}
+.proj-card:nth-child(2) { animation-delay: 0.15s; }
+.proj-card:nth-child(3) { animation-delay: 0.3s; }
+@keyframes card-in {
+  from { opacity: 0; transform: translateY(18px) scale(0.97); }
+}
+.proj-card:hover, .proj-card:focus-visible {
+  transform: translateY(-4px) scale(1.015);
+  border-color: var(--accent);
+  box-shadow: var(--shadow), var(--glow-accent);
+}
+.proj-card .pc-bar {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 12px;
+  background: var(--bg-2);
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+}
+.pc-dots { display: flex; gap: 5px; }
+.pc-dots i { width: 9px; height: 9px; border-radius: 50%; background: var(--line); }
+.pc-dots i:first-child { background: #ff5f57; }
+.pc-dots i:nth-child(2) { background: var(--warn); }
+.pc-dots i:last-child { background: var(--term); }
+/* thumbnail is folded away (hidden) by default, unfolds on hover
+   like a piece of paper opening downward */
+.pc-thumb-wrap {
+  perspective: 900px;
+  max-height: 0;
+  overflow: hidden;
+  border-bottom: 0 solid var(--line);
+  transition: max-height 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+              border-bottom-width 0.5s ease;
+}
+.proj-card:hover .pc-thumb-wrap,
+.proj-card:focus-within .pc-thumb-wrap {
+  max-height: 260px;
+  border-bottom-width: 1px;
+}
+.proj-card .pc-thumb {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  object-position: top;
+  transform-origin: top center;
+  transform: rotateX(-92deg);
+  opacity: 0;
+  filter: saturate(1.05);
+  transition: transform 0.55s cubic-bezier(0.34, 1.4, 0.5, 1) 0.05s,
+              opacity 0.4s ease 0.1s;
+}
+.proj-card:hover .pc-thumb,
+.proj-card:focus-within .pc-thumb {
+  transform: rotateX(0deg);
+  opacity: 1;
+}
+/* subtle crease shadow that fades as it unfolds */
+.pc-thumb-wrap::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  height: 40px;
+  background: linear-gradient(rgba(0,0,0,0.5), transparent);
+  opacity: 1;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+.proj-card:hover .pc-thumb-wrap::after { opacity: 0; }
+.proj-card .pc-hint::before { content: "▸ hover to preview · "; }
+.pc-thumb-wrap { position: relative; }
+.proj-card .pc-body { padding: 14px 16px 16px; }
+.proj-card h3 { font-size: 17px; font-weight: 700; letter-spacing: 0.03em; }
+.proj-card .pc-stack {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  margin-top: 8px;
+}
+.pc-stack em {
+  font-style: normal;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 2px 8px;
+  border: 1px solid var(--accent-dim);
+  border-radius: 999px;
+  color: var(--accent);
+}
+.proj-card .pc-hint {
+  margin-top: 10px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--term);
+  letter-spacing: 0.08em;
+}
+
+/* ── dock ─────────────────────────────────────────────────── */
+#dock {
+  position: absolute;
+  left: 50%; bottom: 12px;
+  transform: translateX(-50%);
+  z-index: 500;
+}
+#dock-items {
+  display: flex;
+  gap: 8px;
+  padding: 8px 12px;
+  background: rgba(8, 14, 25, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+}
+#dock-items { align-items: flex-end; }
+.dock-btn {
+  --s: 1;
+  --y: 0px;
+  width: 44px; height: 44px;
+  display: grid; place-items: center;
+  background: transparent;
+  border: none;
+  border-radius: 12px;
+  position: relative;
+  transform: translateY(var(--y));
+  transition: transform 0.14s ease;
+}
+/* the icon is what scales, anchored to the dock floor (macOS feel) */
+.dock-ic {
+  display: grid; place-items: center;
+  width: 30px; height: 30px;
+  transform: scale(var(--s));
+  transform-origin: bottom center;
+  transition: transform 0.14s ease;
+}
+.dock-btn svg { width: 30px; height: 30px; }
+/* running-app dot */
+.dock-btn.active::after {
+  content: "";
+  position: absolute;
+  bottom: -4px; left: 50%;
+  transform: translateX(-50%);
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.dock-btn.minimized::after { background: var(--warn); }
+/* tooltip label above the icon */
+.dock-tip {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  padding: 4px 10px;
+  background: rgba(8, 14, 25, 0.95);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.12s ease, transform 0.12s ease;
+}
+.dock-btn:hover .dock-tip { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ── responsive ───────────────────────────────────────────── */
+@media (max-width: 760px) {
+  #project-previews {
+    position: static;
+    max-width: none;
+    margin: 12px 16px 0 130px;
+  }
+  #wp-identity { bottom: calc(var(--dock-h) + 26px); right: 16px; }
+  #dragon { width: 70vw; }
+}
+
+/* ── googly eyes in the top bar ───────────────────────────── */
+#googly-eyes {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  margin-left: 6px;
+  cursor: pointer;
+}
+#googly-eyes .eye {
+  position: relative;
+  width: 20px; height: 20px;
+  background: #fff;
+  border: 1.5px solid #0b1220;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: inset 0 -2px 4px rgba(0,0,0,0.25);
+  transition: height 0.09s ease;
+}
+#googly-eyes .pupil {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 8px; height: 8px;
+  margin: -4px 0 0 -4px;
+  background: #06080d;
+  border-radius: 50%;
+  transition: transform 0.08s linear;
+}
+#googly-eyes .pupil::after {
+  content: "";
+  position: absolute;
+  top: 1px; left: 1px;
+  width: 2.5px; height: 2.5px;
+  background: rgba(255,255,255,0.85);
+  border-radius: 50%;
+}
+/* blink: squash the eyes shut */
+#googly-eyes.blink .eye { height: 3px; }
+
+/* dock separator between apps and links */
+.dock-sep {
+  width: 1px;
+  align-self: center;
+  height: 30px;
+  margin: 0 4px;
+  background: var(--line);
+}
+/* links in the dock shouldn't show the running-app dot */
+a.dock-btn::after { display: none; }
+
+
+
+
+/* ── social icons on the desktop ─────────────────────────── */
+#desktop-icons {
+  position: absolute;
+  top: calc(var(--topbar-h) + 26px);
+  left: 26px;
+  z-index: 10;
+  display: grid;
+  grid-template-columns: repeat(2, 92px);
+  gap: 18px 14px;
+}
+.dt-social {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 6px 10px;
+  border: 1px solid transparent;
+  border-radius: 14px;
+  color: var(--text);
+  text-decoration: none;
+  transition: transform 0.18s ease, background 0.18s, border-color 0.18s, box-shadow 0.18s;
+}
+.dt-social:hover, .dt-social:focus-visible {
+  transform: translateY(-4px) scale(1.05);
+  background: rgba(46, 168, 255, 0.08);
+  border-color: var(--line);
+  box-shadow: 0 10px 26px rgba(0,0,0,0.45);
+  text-decoration: none;
+}
+.dt-social-ic {
+  display: grid; place-items: center;
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.5);
+  transition: filter 0.18s;
+}
+.dt-social:hover .dt-social-ic { filter: brightness(1.08) saturate(1.1); }
+.dt-social-ic svg { width: 52px; height: 52px; display: block; }
+.dt-social-lbl {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-shadow: 0 2px 6px #000;
+}
+
+@media (max-width: 760px) {
+  #desktop-icons { grid-template-columns: repeat(4, 1fr); left: 12px; right: 12px; }
+}

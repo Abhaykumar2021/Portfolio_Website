@@ -36,9 +36,9 @@ export const CONFIG = {
   identity: {
     name: "Abhay Kumar",
     handle: "abhay@kali-portfolio",
-    tagline: "EEE Undergrad · Machine Learning & Deep Learning Engineer",
+    tagline: "EEE Undergrad · Artificial Intelligence and Machine Learning",
     summary:
-      "Electrical & Electronics Engineering undergraduate with a cross-disciplinary focus on Machine Learning and Deep Learning. Experienced in building end-to-end ML workflows — data analysis, visualization, model development, and deployment — with production-grade MLOps pipelines using TensorFlow, Scikit-learn and Streamlit. Seeking an internship or full-time role to build impactful, real-world AI solutions.",
+      "Electrical & Electronics Engineering undergraduate with a cross-disciplinary focus on Artificial Intelligence and Machine Learning. Experienced in building end-to-end ML workflows — data analysis, visualization, model development, and deployment — with production-grade MLOps pipelines using TensorFlow, Scikit-learn and Streamlit. Seeking an internship or full-time role to build impactful, real-world AI solutions.",
     location: "Bengaluru, India",
   },
 
